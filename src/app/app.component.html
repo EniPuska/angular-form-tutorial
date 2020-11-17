@@ -7,7 +7,7 @@
             <label for="username">Username</label>
             <input type="text" id="username" class="form-control" name = "username" ngModel required>
           </div>
-          <button class="btn btn-default" type="button">Suggest an Username</button>
+          <button class="btn btn-default" type="button" (click) = "suggestUserName()">Suggest an Username</button>
           <div class="form-group">
             <label for="email">Mail</label>
             <input type="email" id="email" class="form-control" name = "email" email ngModel required #email = "ngModel">
@@ -16,16 +16,33 @@
         </div>
         <div class="form-group">
           <label for="secret">Secret Questions</label>
-          <select id="secret" class="form-control" name = "secret" ngModel required>
+          <select id="secret" class="form-control" name = "secret" [ngModel] = "defaultQuestion" required>
             <option value="pet">Your first Pet?</option>
             <option value="teacher">Your first teacher?</option>
           </select>
         </div> 
         <div class="form-group">
-          <textarea name = "questionAnswer" rows = "3" [(ngModel)] = "answer"></textarea>
+          <textarea name = "questionAnswer" class = "form-control" rows = "3" [(ngModel)] = "answer"></textarea>
+        </div>
+        <div class="radio" *ngFor = "let gender of genders">
+          <label for="">
+            <input type="radio" name = "gender" ngModel [value] = "gender" required>
+            {{ gender }}
+          </label>
         </div>
         <button class="btn btn-primary" type="submit" [disabled] = "!f.valid">Submit</button>
       </form>
+      <hr>
+      <div class="row" *ngIf = "submitted">
+        <div class="col-xs-12">
+          <h3>Your data</h3>
+          <p>Username: {{ user.username }}</p>
+          <p>Mail: {{ user.email }}</p>
+          <p>Secret Question: Your first {{ user.secret }}</p>
+          <p>Answer: {{ user.questionAnswer }}</p>
+          <p>Gender: {{ user.gender }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
